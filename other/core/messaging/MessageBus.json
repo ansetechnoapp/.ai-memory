@@ -1,0 +1,94 @@
+{
+  "bus_config": {
+    "name": "AgentMessageBus",
+    "version": "1.0",
+    "mode": "hybrid",
+    "persistence": "memory",
+    "max_message_size": 1024,
+    "message_ttl": 3600,
+    "retry_policy": {
+      "max_retries": 3,
+      "backoff_factor": 2
+    },
+    "real_time": {
+      "enabled": true,
+      "protocol": "ws",
+      "max_connections": 100,
+      "websocket_config": {
+        "ping_interval": 30000,
+        "pong_timeout": 5000,
+        "compression": true,
+        "max_payload": 16777216
+      },
+      "performance_optimization": {
+        "message_batching": true,
+        "batch_size": 10,
+        "batch_timeout": 100,
+        "priority_queuing": true,
+        "connection_pooling": true
+      },
+      "latency_reduction": {
+        "direct_routing": true,
+        "bypass_queue_for_critical": true,
+        "preemptive_connections": true,
+        "agent_affinity": true
+      }
+    }
+  },
+  "channels": [
+    {
+      "name": "task_lifecycle",
+      "subscribers": ["AgentMeta", "Architect"],
+      "priority": "high",
+      "delivery_guarantee": "at_least_once"
+    },
+    {
+      "name": "agent_coordination",
+      "subscribers": ["all_agents"],
+      "priority": "medium",
+      "delivery_guarantee": "best_effort"
+    },
+    {
+      "name": "content_processing",
+      "subscribers": ["Rephrasing", "Rewording"],
+      "priority": "low",
+      "delivery_guarantee": "at_most_once"
+    },
+    {
+      "name": "system_events",
+      "subscribers": ["DebugMaster", "Resolver"],
+      "priority": "critical",
+      "delivery_guarantee": "exactly_once"
+    },
+    {
+      "name": "database_sync",
+      "subscribers": ["AgentMeta"],
+      "priority": "medium",
+      "delivery_guarantee": "at_least_once"
+    }
+  ],
+  "message_schema": {
+    "header": {
+      "timestamp": "required",
+      "sender": "required",
+      "receiver": "optional",
+      "type": "required"
+    },
+    "payload": {
+      "data": "any",
+      "metadata": "object"
+    },
+    "routing": {
+      "channel": "required",
+      "priority": "optional"
+    }
+  },
+  "security": {
+    "authentication": "token_based",
+    "encryption": "aes_256",
+    "message_signing": true,
+    "rate_limiting": {
+      "max_requests_per_minute": 60
+    }
+  }
+}

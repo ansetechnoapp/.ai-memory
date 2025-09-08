@@ -1,0 +1,90 @@
+{
+  "state_config": {
+    "version": "1.0",
+    "persistence": "file",
+    "update_interval": 5000
+  },
+  "databases": {
+    "memory_db": "core/state/memory.json",
+    "log_db": "core/state/log.json",
+    "history_db": "core/state/history.json",
+    "hierarchy_db": "core/state/hierarchy.json",
+    "authorization_db": "core/state/authorization.json",
+    "routing_db": "core/state/agent_routing.json",
+    "performance_db": "core/state/performance_feedback.json"
+  },
+  "task_counters": {
+    "tasks": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    },
+    "debug": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    },
+    "resolver": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    },
+    "research": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    },
+    "rephrasing": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    },
+    "orchestrator": {
+      "current": 0,
+      "increment_step": 1,
+      "validation": "strict"
+    }
+  },
+  "validation_rules": {
+    "strict": {
+      "check_duplicates": true,
+      "auto_increment": true,
+      "error_on_conflict": true,
+      "mutex_lock": true,
+      "rollback_on_failure": true
+    },
+    "legacy_wrapper": {
+      "enabled": true,
+      "fallback_to_file": true,
+      "sync_interval": 1000,
+      "conflict_resolution": "newest_wins"
+    }
+  },
+  "counter_operations": {
+    "get_next_safe": {
+      "lock_timeout": 5000,
+      "retry_attempts": 3,
+      "validation_before_increment": true
+    },
+    "batch_operations": {
+      "max_batch_size": 10,
+      "atomic_transactions": true
+    }
+  },
+  "legacy_integration": {
+    "file_paths": {
+      "tasks": "$_tasks/currentTaskNumber.txt",
+      "debug": "$_debug/currentTaskNumber.txt",
+      "resolver": "$_resolver/currentTaskNumber.txt",
+      "research": "$_research/currentTaskNumber.txt",
+      "rephrasing": "$_rephrasing/currentTaskNumber.txt",
+      "orchestrator": "$_orchestrator/currentTaskNumber.txt"
+    },
+    "sync_strategy": "bidirectional",
+    "conflict_detection": true
+  },
+  "security": {
+    "access_control": "agent_only",
+    "encryption": false
+  }
+}

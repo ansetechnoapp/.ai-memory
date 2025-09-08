@@ -1,0 +1,486 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Multi-Level Cache System Configuration",
+  "description": "Configuration du système de cache multi-niveaux pour optimiser les performances",
+  "type": "object",
+  "properties": {
+    "cache_system": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "MultiLevelCacheSystem"
+        },
+        "version": {
+          "type": "string",
+          "default": "1.0.0"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "global_ttl": {
+          "type": "integer",
+          "default": 3600,
+          "description": "TTL global par défaut en secondes"
+        },
+        "max_memory_usage_mb": {
+          "type": "integer",
+          "default": 512,
+          "description": "Limite mémoire globale du cache"
+        },
+        "eviction_policy": {
+          "type": "string",
+          "enum": ["LRU", "LFU", "FIFO", "TTL_BASED"],
+          "default": "LRU",
+          "description": "Politique d'éviction globale"
+        }
+      }
+    },
+    "cache_levels": {
+      "type": "object",
+      "description": "Configuration des différents niveaux de cache",
+      "properties": {
+        "L1_memory_cache": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "default": "Cache mémoire ultra-rapide pour données fréquemment accédées"
+            },
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "max_size_mb": {
+              "type": "integer",
+              "default": 128
+            },
+            "max_entries": {
+              "type": "integer",
+              "default": 10000
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 300,
+              "description": "5 minutes"
+            },
+            "eviction_policy": {
+              "type": "string",
+              "enum": ["LRU", "LFU"],
+              "default": "LRU"
+            },
+            "compression": {
+              "type": "boolean",
+              "default": false,
+              "description": "Compression désactivée pour L1 (performance)"
+            },
+            "cache_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "agent_configurations",
+                  "frequent_queries",
+                  "session_data",
+                  "hot_results"
+                ]
+              },
+              "default": ["agent_configurations", "frequent_queries", "session_data"]
+            }
+          }
+        },
+        "L2_disk_cache": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "default": "Cache disque pour données moins fréquentes mais importantes"
+            },
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "max_size_mb": {
+              "type": "integer",
+              "default": 1024
+            },
+            "cache_directory": {
+              "type": "string",
+              "default": "./cache/L2"
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 3600,
+              "description": "1 heure"
+            },
+            "compression": {
+              "type": "boolean",
+              "default": true,
+              "description": "Compression activée pour économiser l'espace"
+            },
+            "compression_algorithm": {
+              "type": "string",
+              "enum": ["gzip", "lz4", "zstd"],
+              "default": "lz4"
+            },
+            "cache_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "task_results",
+                  "processed_files",
+                  "analysis_reports",
+                  "workflow_states",
+                  "large_datasets"
+                ]
+              },
+              "default": ["task_results", "processed_files", "analysis_reports"]
+            }
+          }
+        },
+        "L3_distributed_cache": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "default": "Cache distribué pour partage entre instances"
+            },
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Désactivé par défaut, à activer pour déploiements distribués"
+            },
+            "backend": {
+              "type": "string",
+              "enum": ["redis", "memcached", "hazelcast"],
+              "default": "redis"
+            },
+            "connection_string": {
+              "type": "string",
+              "default": "redis://localhost:6379"
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 7200,
+              "description": "2 heures"
+            },
+            "replication_factor": {
+              "type": "integer",
+              "default": 2
+            },
+            "cache_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "shared_configurations",
+                  "global_state",
+                  "cross_instance_results"
+                ]
+              },
+              "default": ["shared_configurations", "global_state"]
+            }
+          }
+        }
+      }
+    },
+    "cache_strategies": {
+      "type": "object",
+      "description": "Stratégies de mise en cache par type de données",
+      "properties": {
+        "agent_results": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "enum": ["write_through", "write_back", "write_around"],
+              "default": "write_through"
+            },
+            "cache_levels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["L1", "L2", "L3"]
+              },
+              "default": ["L1", "L2"]
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 1800
+            },
+            "invalidation_triggers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": ["agent_config_change", "task_completion"]
+            }
+          }
+        },
+        "configuration_data": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "default": "write_through"
+            },
+            "cache_levels": {
+              "type": "array",
+              "default": ["L1", "L3"]
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 7200,
+              "description": "Configuration change moins fréquemment"
+            },
+            "invalidation_triggers": {
+              "type": "array",
+              "default": ["config_update", "system_restart"]
+            }
+          }
+        },
+        "task_metadata": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "default": "write_back"
+            },
+            "cache_levels": {
+              "type": "array",
+              "default": ["L1"]
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 600,
+              "description": "Métadonnées changent fréquemment"
+            },
+            "batch_write_interval": {
+              "type": "integer",
+              "default": 30,
+              "description": "Écriture par batch toutes les 30 secondes"
+            }
+          }
+        },
+        "file_content": {
+          "type": "object",
+          "properties": {
+            "strategy": {
+              "type": "string",
+              "default": "write_around"
+            },
+            "cache_levels": {
+              "type": "array",
+              "default": ["L2"]
+            },
+            "ttl_seconds": {
+              "type": "integer",
+              "default": 3600
+            },
+            "size_threshold_kb": {
+              "type": "integer",
+              "default": 100,
+              "description": "Ne cache que les fichiers < 100KB"
+            }
+          }
+        }
+      }
+    },
+    "cache_operations": {
+      "type": "object",
+      "description": "Configuration des opérations de cache",
+      "properties": {
+        "read_operations": {
+          "type": "object",
+          "properties": {
+            "read_through": {
+              "type": "boolean",
+              "default": true,
+              "description": "Lecture automatique depuis la source si absent du cache"
+            },
+            "cascade_read": {
+              "type": "boolean",
+              "default": true,
+              "description": "Recherche dans tous les niveaux de cache"
+            },
+            "promote_on_hit": {
+              "type": "boolean",
+              "default": true,
+              "description": "Remonte les données vers les niveaux supérieurs"
+            },
+            "parallel_read": {
+              "type": "boolean",
+              "default": false,
+              "description": "Lecture parallèle sur plusieurs niveaux"
+            }
+          }
+        },
+        "write_operations": {
+          "type": "object",
+          "properties": {
+            "async_write": {
+              "type": "boolean",
+              "default": true,
+              "description": "Écriture asynchrone pour améliorer les performances"
+            },
+            "batch_write": {
+              "type": "boolean",
+              "default": true,
+              "description": "Écriture par batch pour optimiser les I/O"
+            },
+            "write_coalescing": {
+              "type": "boolean",
+              "default": true,
+              "description": "Fusion des écritures multiples sur la même clé"
+            },
+            "consistency_level": {
+              "type": "string",
+              "enum": ["eventual", "strong", "session"],
+              "default": "eventual"
+            }
+          }
+        },
+        "invalidation": {
+          "type": "object",
+          "properties": {
+            "cascade_invalidation": {
+              "type": "boolean",
+              "default": true,
+              "description": "Invalidation en cascade sur tous les niveaux"
+            },
+            "pattern_invalidation": {
+              "type": "boolean",
+              "default": true,
+              "description": "Support des patterns pour invalidation groupée"
+            },
+            "lazy_invalidation": {
+              "type": "boolean",
+              "default": false,
+              "description": "Invalidation différée"
+            }
+          }
+        }
+      }
+    },
+    "performance_optimization": {
+      "type": "object",
+      "properties": {
+        "prefetching": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "prediction_algorithm": {
+              "type": "string",
+              "enum": ["sequential", "pattern_based", "ml_based"],
+              "default": "pattern_based"
+            },
+            "prefetch_distance": {
+              "type": "integer",
+              "default": 3,
+              "description": "Nombre d'éléments à précharger"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "default": 0.7,
+              "description": "Seuil de confiance pour le préchargement"
+            }
+          }
+        },
+        "compression": {
+          "type": "object",
+          "properties": {
+            "adaptive_compression": {
+              "type": "boolean",
+              "default": true,
+              "description": "Compression adaptative selon la taille"
+            },
+            "compression_threshold_kb": {
+              "type": "integer",
+              "default": 10,
+              "description": "Seuil de compression en KB"
+            },
+            "compression_ratio_target": {
+              "type": "number",
+              "default": 0.3,
+              "description": "Ratio de compression cible"
+            }
+          }
+        },
+        "partitioning": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "partition_strategy": {
+              "type": "string",
+              "enum": ["hash", "range", "agent_based", "time_based"],
+              "default": "agent_based"
+            },
+            "partition_count": {
+              "type": "integer",
+              "default": 16
+            }
+          }
+        }
+      }
+    },
+    "maintenance": {
+      "type": "object",
+      "properties": {
+        "automatic_cleanup": {
+          "type": "boolean",
+          "default": true
+        },
+        "cleanup_interval_hours": {
+          "type": "integer",
+          "default": 6
+        },
+        "defragmentation": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "schedule": {
+              "type": "string",
+              "default": "0 2 * * *",
+              "description": "Cron expression pour défragmentation (2h du matin)"
+            },
+            "fragmentation_threshold": {
+              "type": "number",
+              "default": 0.3,
+              "description": "Seuil de fragmentation pour déclencher la défragmentation"
+            }
+          }
+        },
+        "backup_and_restore": {
+          "type": "object",
+          "properties": {
+            "backup_enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Sauvegarde du cache (optionnel)"
+            },
+            "backup_interval_hours": {
+              "type": "integer",
+              "default": 24
+            },
+            "backup_retention_days": {
+              "type": "integer",
+              "default": 7
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["cache_system", "cache_levels", "cache_strategies"]
+}

@@ -1,0 +1,253 @@
+{
+  "search_config": {
+    "version": "2.0",
+    "unified_search_enabled": true,
+    "semantic_search_enabled": true,
+    "keyword_indexing": true,
+    "full_text_search": true,
+    "embedding_model": "text-embedding-ada-002",
+    "similarity_threshold": 0.7,
+    "max_results": 50,
+    "search_timeout_ms": 5000
+  },
+  "search_api": {
+    "endpoint": "/api/search/history",
+    "methods": {
+      "keyword_search": {
+        "path": "/keywords",
+        "description": "Search by keywords with fuzzy matching",
+        "parameters": {
+          "query": "string (required)",
+          "fuzzy": "boolean (optional, default: true)",
+          "limit": "number (optional, default: 10)",
+          "offset": "number (optional, default: 0)"
+        }
+      },
+      "semantic_search": {
+        "path": "/semantic",
+        "description": "Search by meaning using embeddings",
+        "parameters": {
+          "query": "string (required)",
+          "similarity_threshold": "number (optional, default: 0.7)",
+          "limit": "number (optional, default: 10)"
+        }
+      },
+      "agent_history": {
+        "path": "/agent/{agent_name}",
+        "description": "Get decision history for specific agent",
+        "parameters": {
+          "agent_name": "string (required)",
+          "date_from": "string (optional, ISO date)",
+          "date_to": "string (optional, ISO date)",
+          "decision_type": "string (optional)"
+        }
+      },
+      "task_history": {
+        "path": "/tasks/{task_type}",
+        "description": "Get history for specific task types",
+        "parameters": {
+          "task_type": "string (required)",
+          "success_only": "boolean (optional, default: false)",
+          "limit": "number (optional, default: 20)"
+        }
+      },
+      "timeline_search": {
+        "path": "/timeline",
+        "description": "Search within specific time ranges",
+        "parameters": {
+          "start_date": "string (required, ISO date)",
+          "end_date": "string (required, ISO date)",
+          "agent": "string (optional)",
+          "keywords": "array of strings (optional)"
+        }
+      }
+    }
+  },
+  "indexing_system": {
+    "keyword_index": {
+      "enabled": true,
+      "auto_extract_keywords": true,
+      "stemming_enabled": true,
+      "stop_words_removal": true,
+      "synonym_expansion": true,
+      "weight_by_frequency": true
+    },
+    "semantic_index": {
+      "enabled": true,
+      "embedding_dimension": 1536,
+      "vector_database": "local_faiss",
+      "batch_processing": true,
+      "incremental_updates": true
+    },
+    "categorical_index": {
+      "by_agent": {
+        "enabled": true,
+        "type": "btree"
+      },
+      "by_decision_type": {
+        "enabled": true,
+        "type": "btree"
+      },
+      "by_outcome": {
+        "enabled": true,
+        "type": "btree"
+      },
+      "by_priority": {
+        "enabled": true,
+        "type": "btree"
+      }
+    },
+    "temporal_index": {
+      "by_timestamp": {
+        "enabled": true,
+        "granularity": "hour",
+        "type": "btree"
+      },
+      "by_date_range": {
+        "enabled": true,
+        "partitioning": "monthly"
+      }
+    }
+  },
+  "search_optimization": {
+    "caching": {
+      "query_cache": {
+        "enabled": true,
+        "ttl_seconds": 300,
+        "max_entries": 1000
+      },
+      "result_cache": {
+        "enabled": true,
+        "ttl_seconds": 600,
+        "max_size_mb": 50
+      }
+    },
+    "query_suggestions": {
+      "enabled": true,
+      "auto_complete": true,
+      "spell_correction": true,
+      "related_queries": true
+    },
+    "performance_monitoring": {
+      "query_analytics": true,
+      "slow_query_threshold_ms": 1000,
+      "popular_queries_tracking": true
+    }
+  },
+  "history_entries": [
+    {
+      "id": "test1",
+      "timestamp": 1720000000,
+      "decision": "Apply recommendations",
+      "keywords": ["json", "database"],
+      "details": {"description": "Test history entry"},
+      "agent": "Kevin",
+      "decision_type": "optimization",
+      "outcome": "success",
+      "priority": "high",
+      "context": {
+        "task_id": "task_001",
+        "related_agents": ["Architect", "DebugMaster"],
+        "dependencies": ["StateManager.json", "MessageBus.json"],
+        "impact_score": 0.85
+      },
+      "embedding": null,
+      "extracted_keywords": ["json", "database", "optimization", "recommendations"],
+      "semantic_tags": ["system_improvement", "configuration", "efficiency"],
+      "search_metadata": {
+        "indexed_at": 1720000000,
+        "last_accessed": 1720000000,
+        "access_count": 0,
+        "relevance_score": 1.0
+      }
+    }
+  ],
+  "schema": {
+    "entry": {
+      "id": "string (unique identifier)",
+      "timestamp": "number (Unix timestamp in milliseconds)",
+      "decision": "string (decision description)",
+      "keywords": "array of strings (manual keywords)",
+      "details": "object (decision-specific details)",
+      "agent": "string (agent making the decision)",
+      "decision_type": "string (optimization, delegation, error_handling, etc.)",
+      "outcome": "string (success, failure, pending, partial)",
+      "priority": "string (low, medium, high, critical)",
+      "context": {
+        "task_id": "string (related task identifier)",
+        "related_agents": "array of strings (involved agents)",
+        "dependencies": "array of strings (affected files/systems)",
+        "impact_score": "number (0-1, estimated impact)"
+      },
+      "embedding": "array of numbers (semantic embedding vector)",
+      "extracted_keywords": "array of strings (auto-extracted keywords)",
+      "semantic_tags": "array of strings (AI-generated semantic tags)",
+      "search_metadata": {
+        "indexed_at": "number (indexing timestamp)",
+        "last_accessed": "number (last search access)",
+        "access_count": "number (search access frequency)",
+        "relevance_score": "number (computed relevance score)"
+      }
+    }
+  },
+  "file_integration": {
+    "task_reports_indexing": {
+      "enabled": true,
+      "directories": [
+        "$_tasks/",
+        "$_debug/",
+        "$_agents/*/reports/"
+      ],
+      "file_patterns": [
+        "*.md",
+        "*.json",
+        "*.txt"
+      ],
+      "auto_extract_decisions": true,
+      "link_to_history": true
+    },
+    "numbered_files_tracking": {
+      "enabled": true,
+      "pattern_recognition": {
+        "architect_plans": "$_tasks/architect_*.md",
+        "debug_reports": "$_debug/debug_*.md",
+        "agent_reports": "$_agents/*/report_*.md"
+      },
+      "content_summarization": true,
+      "decision_extraction": true
+    }
+  },
+  "search_examples": {
+    "keyword_queries": [
+      "historique des plans pour Architect",
+      "erreurs de débogage récentes",
+      "optimisations système",
+      "délégations échouées"
+    ],
+    "semantic_queries": [
+      "Comment améliorer les performances du système?",
+      "Quelles décisions ont eu le plus d'impact?",
+      "Problèmes récurrents avec les agents",
+      "Stratégies d'optimisation efficaces"
+    ],
+    "agent_specific_queries": [
+      "Toutes les décisions de Kevin cette semaine",
+      "Historique des tâches d'Architect",
+      "Rapports de DebugMaster sur les erreurs critiques"
+    ]
+  },
+  "analytics": {
+    "decision_patterns": {
+      "most_frequent_keywords": {},
+      "decision_success_rate": {},
+      "agent_decision_frequency": {},
+      "temporal_decision_trends": {}
+    },
+    "search_analytics": {
+      "popular_queries": [],
+      "search_success_rate": 0.0,
+      "average_response_time_ms": 0,
+      "user_satisfaction_score": 0.0
+    }
+  }
+}

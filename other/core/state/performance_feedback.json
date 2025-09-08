@@ -1,0 +1,335 @@
+{
+  "feedback_config": {
+    "version": "1.0",
+    "evaluation_enabled": true,
+    "auto_adjustment": true,
+    "learning_rate": 0.1,
+    "evaluation_frequency": "after_each_task",
+    "historical_weight": 0.7,
+    "recent_weight": 0.3,
+    "min_tasks_for_evaluation": 3
+  },
+  "kevin_evaluation_engine": {
+    "evaluation_criteria": {
+      "task_completion_rate": {
+        "weight": 0.25,
+        "description": "Percentage of tasks completed successfully",
+        "calculation": "completed_tasks / total_assigned_tasks"
+      },
+      "response_time": {
+        "weight": 0.20,
+        "description": "Average time to complete tasks",
+        "target_threshold": 300000,
+        "penalty_factor": 0.1
+      },
+      "quality_score": {
+        "weight": 0.25,
+        "description": "Quality of deliverables based on Kevin's assessment",
+        "scale": "1-10",
+        "factors": ["accuracy", "completeness", "innovation", "efficiency"]
+      },
+      "collaboration_effectiveness": {
+        "weight": 0.15,
+        "description": "How well agent works with other agents",
+        "metrics": ["communication_clarity", "dependency_management", "conflict_resolution"]
+      },
+      "error_rate": {
+        "weight": 0.15,
+        "description": "Frequency of errors requiring intervention",
+        "calculation": "errors / total_tasks",
+        "penalty_multiplier": 2.0
+      }
+    },
+    "performance_thresholds": {
+      "excellent": {
+        "min_score": 0.85,
+        "priority_boost": 0.2,
+        "delegation_preference": "high"
+      },
+      "good": {
+        "min_score": 0.70,
+        "priority_boost": 0.1,
+        "delegation_preference": "medium"
+      },
+      "average": {
+        "min_score": 0.55,
+        "priority_boost": 0.0,
+        "delegation_preference": "normal"
+      },
+      "below_average": {
+        "min_score": 0.40,
+        "priority_boost": -0.1,
+        "delegation_preference": "low"
+      },
+      "poor": {
+        "min_score": 0.0,
+        "priority_boost": -0.2,
+        "delegation_preference": "minimal"
+      }
+    }
+  },
+  "agent_performance_profiles": {
+    "Architect": {
+      "current_score": 0.82,
+      "performance_tier": "excellent",
+      "total_tasks": 15,
+      "completed_tasks": 14,
+      "failed_tasks": 1,
+      "average_response_time_ms": 245000,
+      "quality_ratings": [8, 9, 7, 8, 9, 8, 7, 9, 8, 8],
+      "recent_performance_trend": "improving",
+      "strengths": ["system_design", "technical_coordination", "innovation"],
+      "improvement_areas": ["documentation", "time_estimation"],
+      "delegation_priority": 1.2,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.78,
+          "tasks_completed": 3,
+          "feedback": "Good architectural decisions, needs better documentation"
+        }
+      ]
+    },
+    "DebugMaster": {
+      "current_score": 0.75,
+      "performance_tier": "good",
+      "total_tasks": 12,
+      "completed_tasks": 11,
+      "failed_tasks": 1,
+      "average_response_time_ms": 180000,
+      "quality_ratings": [7, 8, 6, 9, 7, 8, 7, 6, 8, 7],
+      "recent_performance_trend": "stable",
+      "strengths": ["error_diagnosis", "quick_resolution", "thoroughness"],
+      "improvement_areas": ["complex_debugging", "root_cause_analysis"],
+      "delegation_priority": 1.1,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.73,
+          "tasks_completed": 4,
+          "feedback": "Excellent at quick fixes, needs improvement on complex issues"
+        }
+      ]
+    },
+    "DeepSearch": {
+      "current_score": 0.88,
+      "performance_tier": "excellent",
+      "total_tasks": 20,
+      "completed_tasks": 19,
+      "failed_tasks": 1,
+      "average_response_time_ms": 120000,
+      "quality_ratings": [9, 8, 9, 9, 8, 9, 9, 8, 9, 9],
+      "recent_performance_trend": "excellent",
+      "strengths": ["information_retrieval", "research_depth", "accuracy"],
+      "improvement_areas": ["search_optimization"],
+      "delegation_priority": 1.3,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.85,
+          "tasks_completed": 5,
+          "feedback": "Outstanding research capabilities, very reliable"
+        }
+      ]
+    },
+    "Resolver": {
+      "current_score": 0.68,
+      "performance_tier": "average",
+      "total_tasks": 10,
+      "completed_tasks": 8,
+      "failed_tasks": 2,
+      "average_response_time_ms": 320000,
+      "quality_ratings": [6, 7, 5, 8, 6, 7, 6, 5],
+      "recent_performance_trend": "declining",
+      "strengths": ["problem_solving", "persistence"],
+      "improvement_areas": ["solution_efficiency", "time_management", "error_handling"],
+      "delegation_priority": 0.9,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.72,
+          "tasks_completed": 3,
+          "feedback": "Good problem-solving but needs to improve efficiency"
+        }
+      ]
+    },
+    "Rephrasing": {
+      "current_score": 0.79,
+      "performance_tier": "good",
+      "total_tasks": 8,
+      "completed_tasks": 8,
+      "failed_tasks": 0,
+      "average_response_time_ms": 90000,
+      "quality_ratings": [8, 7, 8, 9, 7, 8, 8, 9],
+      "recent_performance_trend": "improving",
+      "strengths": ["text_quality", "speed", "consistency"],
+      "improvement_areas": ["creative_alternatives", "context_awareness"],
+      "delegation_priority": 1.15,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.75,
+          "tasks_completed": 2,
+          "feedback": "Reliable text improvement, good speed"
+        }
+      ]
+    },
+    "Rewording": {
+      "current_score": 0.76,
+      "performance_tier": "good",
+      "total_tasks": 6,
+      "completed_tasks": 6,
+      "failed_tasks": 0,
+      "average_response_time_ms": 85000,
+      "quality_ratings": [7, 8, 7, 8, 8, 7],
+      "recent_performance_trend": "stable",
+      "strengths": ["vocabulary_enhancement", "style_consistency"],
+      "improvement_areas": ["advanced_techniques", "domain_expertise"],
+      "delegation_priority": 1.1,
+      "last_evaluation": 1720000000,
+      "performance_history": [
+        {
+          "date": 1719900000,
+          "score": 0.74,
+          "tasks_completed": 2,
+          "feedback": "Good vocabulary work, consistent quality"
+        }
+      ]
+    }
+  },
+  "feedback_collection": {
+    "post_task_evaluation": {
+      "enabled": true,
+      "automatic_scoring": true,
+      "kevin_manual_review": true,
+      "evaluation_form": {
+        "task_completion": "boolean (was task completed successfully?)",
+        "quality_score": "number 1-10 (overall quality of work)",
+        "timeliness": "number 1-10 (was task completed on time?)",
+        "communication": "number 1-10 (clarity of communication)",
+        "innovation": "number 1-10 (creative problem solving)",
+        "efficiency": "number 1-10 (resource usage efficiency)",
+        "collaboration": "number 1-10 (teamwork with other agents)",
+        "error_handling": "number 1-10 (how well errors were managed)",
+        "feedback_notes": "string (detailed feedback from Kevin)",
+        "improvement_suggestions": "array of strings (specific areas to improve)"
+      }
+    },
+    "continuous_monitoring": {
+      "response_time_tracking": true,
+      "error_rate_monitoring": true,
+      "resource_usage_tracking": true,
+      "communication_pattern_analysis": true
+    }
+  },
+  "priority_adjustment_system": {
+    "dynamic_prioritization": {
+      "enabled": true,
+      "adjustment_frequency": "daily",
+      "factors": {
+        "recent_performance": 0.4,
+        "historical_performance": 0.3,
+        "task_complexity_match": 0.2,
+        "workload_balance": 0.1
+      }
+    },
+    "delegation_rules": {
+      "high_priority_tasks": {
+        "min_performance_score": 0.75,
+        "preferred_agents": ["DeepSearch", "Architect"],
+        "backup_agents": ["Rephrasing", "DebugMaster"]
+      },
+      "medium_priority_tasks": {
+        "min_performance_score": 0.60,
+        "rotation_enabled": true,
+        "learning_opportunities": true
+      },
+      "low_priority_tasks": {
+        "min_performance_score": 0.40,
+        "training_tasks": true,
+        "improvement_focus": true
+      }
+    },
+    "workload_balancing": {
+      "max_concurrent_tasks_per_agent": 3,
+      "performance_based_allocation": true,
+      "avoid_overloading_top_performers": true,
+      "provide_growth_opportunities": true
+    }
+  },
+  "learning_and_improvement": {
+    "pattern_recognition": {
+      "success_patterns": {
+        "task_type_agent_matching": {},
+        "optimal_delegation_timing": {},
+        "effective_collaboration_pairs": {}
+      },
+      "failure_patterns": {
+        "common_failure_points": {},
+        "agent_weakness_areas": {},
+        "system_bottlenecks": {}
+      }
+    },
+    "adaptive_learning": {
+      "performance_prediction": true,
+      "optimal_task_assignment": true,
+      "agent_development_tracking": true,
+      "system_optimization_suggestions": true
+    },
+    "training_recommendations": {
+      "skill_gap_analysis": true,
+      "personalized_improvement_plans": true,
+      "cross_training_opportunities": true,
+      "mentorship_pairing": true
+    }
+  },
+  "reporting_and_analytics": {
+    "performance_dashboards": {
+      "real_time_metrics": true,
+      "trend_analysis": true,
+      "comparative_analysis": true,
+      "predictive_insights": true
+    },
+    "periodic_reports": {
+      "daily_summary": {
+        "enabled": true,
+        "include_top_performers": true,
+        "include_improvement_areas": true
+      },
+      "weekly_analysis": {
+        "enabled": true,
+        "performance_trends": true,
+        "delegation_effectiveness": true,
+        "system_optimization_opportunities": true
+      },
+      "monthly_review": {
+        "enabled": true,
+        "comprehensive_evaluation": true,
+        "strategic_recommendations": true,
+        "agent_development_plans": true
+      }
+    }
+  },
+  "integration_points": {
+    "with_authorization_system": {
+      "performance_based_permissions": true,
+      "dynamic_authority_levels": true,
+      "trust_score_integration": true
+    },
+    "with_routing_system": {
+      "performance_weighted_routing": true,
+      "fallback_based_on_performance": true,
+      "load_balancing_optimization": true
+    },
+    "with_logging_system": {
+      "performance_event_logging": true,
+      "evaluation_audit_trail": true,
+      "improvement_tracking": true
+    }
+  }
+}

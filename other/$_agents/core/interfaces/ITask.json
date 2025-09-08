@@ -1,0 +1,291 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ITask Interface",
+  "description": "Interface standardisée pour toutes les tâches du système multi-agents",
+  "type": "object",
+  "properties": {
+    "task_info": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifiant unique de la tâche",
+          "pattern": "^task_[0-9]+_[a-zA-Z0-9_-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nom descriptif de la tâche",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": ["planning", "debugging", "research", "content_enhancement", "resolution", "orchestration"],
+          "description": "Type de tâche"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "default": "medium",
+          "description": "Priorité de la tâche"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "assigned", "in_progress", "completed", "failed", "cancelled"],
+          "default": "pending",
+          "description": "État actuel de la tâche"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp de création"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp de dernière mise à jour"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date limite d'exécution (optionnel)"
+        }
+      },
+      "required": ["id", "name", "type", "created_at"]
+    },
+    "assignment": {
+      "type": "object",
+      "properties": {
+        "assigned_agent": {
+          "type": "string",
+          "description": "ID de l'agent assigné"
+        },
+        "requested_by": {
+          "type": "string",
+          "description": "ID de l'agent ou utilisateur demandeur"
+        },
+        "assigned_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp d'assignation"
+        },
+        "estimated_duration": {
+          "type": "integer",
+          "description": "Durée estimée en secondes"
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "user_query": {
+          "type": "string",
+          "description": "Requête utilisateur originale"
+        },
+        "context": {
+          "type": "object",
+          "description": "Contexte additionnel pour la tâche"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["input", "reference", "template"]
+              },
+              "required": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": ["path", "type"]
+          },
+          "description": "Fichiers associés à la tâche"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Paramètres spécifiques à la tâche"
+        }
+      },
+      "required": ["user_query"]
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "prerequisite_tasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs des tâches prérequises"
+        },
+        "blocking_tasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs des tâches bloquées par cette tâche"
+        },
+        "related_tasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "IDs des tâches liées"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp de début d'exécution"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp de fin d'exécution"
+        },
+        "actual_duration": {
+          "type": "integer",
+          "description": "Durée réelle en secondes"
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0,
+          "description": "Nombre de tentatives"
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 3,
+          "description": "Nombre maximum de tentatives"
+        },
+        "progress": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Progression (0-1)"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Critères de succès"
+        },
+        "validation_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["warning", "error", "critical"]
+              }
+            },
+            "required": ["rule", "severity"]
+          },
+          "description": "Règles de validation"
+        },
+        "quality_gates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Points de contrôle qualité"
+        }
+      }
+    },
+    "communication": {
+      "type": "object",
+      "properties": {
+        "events_to_emit": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "event_type": {
+                "type": "string"
+              },
+              "trigger": {
+                "type": "string",
+                "enum": ["on_start", "on_progress", "on_complete", "on_error"]
+              },
+              "recipients": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["event_type", "trigger"]
+          },
+          "description": "Événements à émettre pendant l'exécution"
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "on_completion": {
+              "type": "boolean",
+              "default": true
+            },
+            "on_error": {
+              "type": "boolean",
+              "default": true
+            },
+            "on_delay": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags pour catégorisation"
+        },
+        "category": {
+          "type": "string",
+          "description": "Catégorie de la tâche"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "medium", "complex", "expert"],
+          "description": "Niveau de complexité"
+        },
+        "estimated_cost": {
+          "type": "number",
+          "description": "Coût estimé (tokens, temps, etc.)"
+        },
+        "custom_fields": {
+          "type": "object",
+          "description": "Champs personnalisés spécifiques au domaine"
+        }
+      }
+    }
+  },
+  "required": ["task_info", "input"]
+}

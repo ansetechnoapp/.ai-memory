@@ -1,0 +1,12 @@
+{
+  "name": "message-bus-test",
+  "version": "1.0.0",
+  "description": "Test for real-time message bus",
+  "main": "test_realtime.js",
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "scripts": {
+    "test": "node test_realtime.js"
+  }
+}

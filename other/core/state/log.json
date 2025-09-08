@@ -1,0 +1,179 @@
+{
+  "log_config": {
+    "version": "2.0",
+    "immutability_enabled": true,
+    "hash_algorithm": "SHA-256",
+    "webhook_notifications": true,
+    "real_time_sync": true,
+    "retention_policy": {
+      "max_entries": 10000,
+      "archive_after_days": 90,
+      "compression_enabled": true
+    }
+  },
+  "webhook_config": {
+    "endpoints": [
+      {
+        "name": "kevin_notifications",
+        "url": "http://localhost:3001/webhooks/kevin",
+        "events": ["critical_error", "delegation", "counter_increment", "authorization_failure"],
+        "authentication": {
+          "type": "bearer_token",
+          "token_env": "KEVIN_WEBHOOK_TOKEN"
+        },
+        "retry_policy": {
+          "max_retries": 3,
+          "backoff_strategy": "exponential",
+          "timeout_ms": 5000
+        }
+      },
+      {
+        "name": "system_monitoring",
+        "url": "http://localhost:3002/webhooks/system",
+        "events": ["performance_alert", "resource_usage", "agent_failure"],
+        "authentication": {
+          "type": "api_key",
+          "key_env": "SYSTEM_API_KEY"
+        }
+      }
+    ],
+    "delivery_guarantees": {
+      "at_least_once": true,
+      "duplicate_detection": true,
+      "ordering_preserved": true
+    }
+  },
+  "immutability_system": {
+    "hash_chain": {
+      "enabled": true,
+      "previous_hash_validation": true,
+      "merkle_tree_support": true
+    },
+    "digital_signatures": {
+      "enabled": true,
+      "signing_key_env": "LOG_SIGNING_KEY",
+      "verification_required": true
+    },
+    "tamper_detection": {
+      "integrity_checks": true,
+      "alert_on_modification": true,
+      "forensic_logging": true
+    }
+  },
+  "logs": [
+    {
+      "id": "test1",
+      "timestamp": 1720000000,
+      "action": "update",
+      "agent": "Kevin",
+      "details": {"description": "Test log entry"},
+      "hash": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+      "previous_hash": null,
+      "signature": "signature_placeholder",
+      "chain_position": 1,
+      "verification_status": "verified"
+    }
+  ],
+  "schema": {
+    "entry": {
+      "id": "string (unique identifier)",
+      "timestamp": "number (Unix timestamp in milliseconds)",
+      "action": "string (action type: delegation, increment, update, error, etc.)",
+      "agent": "string (agent performing the action)",
+      "details": "object (action-specific details)",
+      "hash": "string (SHA-256 hash of entry content)",
+      "previous_hash": "string|null (hash of previous entry for chain validation)",
+      "signature": "string (digital signature for authenticity)",
+      "chain_position": "number (position in the hash chain)",
+      "verification_status": "string (verified, pending, failed)",
+      "metadata": {
+        "source_ip": "string (optional)",
+        "user_agent": "string (optional)",
+        "session_id": "string (optional)",
+        "correlation_id": "string (for tracing related actions)",
+        "severity_level": "string (info, warning, error, critical)",
+        "category": "string (system, user, agent, security)",
+        "tags": "array of strings (for filtering and search)"
+      }
+    }
+  },
+  "action_types": {
+    "delegation": {
+      "description": "Task delegation from Kevin to agents",
+      "required_fields": ["target_agent", "task_description", "priority"],
+      "webhook_events": ["kevin_notifications"]
+    },
+    "counter_increment": {
+      "description": "Increment of task counters",
+      "required_fields": ["counter_type", "old_value", "new_value"],
+      "webhook_events": ["kevin_notifications"]
+    },
+    "authorization_check": {
+      "description": "Authorization validation events",
+      "required_fields": ["requesting_agent", "requested_action", "result"],
+      "webhook_events": ["kevin_notifications", "system_monitoring"]
+    },
+    "agent_communication": {
+      "description": "Inter-agent communication events",
+      "required_fields": ["sender", "receiver", "message_type"],
+      "webhook_events": ["system_monitoring"]
+    },
+    "error_event": {
+      "description": "System or agent errors",
+      "required_fields": ["error_type", "error_message", "stack_trace"],
+      "webhook_events": ["kevin_notifications", "system_monitoring"]
+    },
+    "performance_metric": {
+      "description": "Performance and resource usage metrics",
+      "required_fields": ["metric_name", "value", "unit"],
+      "webhook_events": ["system_monitoring"]
+    }
+  },
+  "search_indexes": {
+    "by_agent": {
+      "enabled": true,
+      "fields": ["agent"],
+      "type": "btree"
+    },
+    "by_action": {
+      "enabled": true,
+      "fields": ["action"],
+      "type": "btree"
+    },
+    "by_timestamp": {
+      "enabled": true,
+      "fields": ["timestamp"],
+      "type": "btree"
+    },
+    "by_correlation_id": {
+      "enabled": true,
+      "fields": ["metadata.correlation_id"],
+      "type": "hash"
+    },
+    "full_text_search": {
+      "enabled": true,
+      "fields": ["details", "metadata.tags"],
+      "type": "inverted_index"
+    }
+  },
+  "monitoring_metrics": {
+    "total_entries": 1,
+    "entries_per_agent": {
+      "Kevin": 1
+    },
+    "entries_per_action": {
+      "update": 1
+    },
+    "webhook_delivery_stats": {
+      "total_sent": 0,
+      "successful_deliveries": 0,
+      "failed_deliveries": 0,
+      "average_delivery_time_ms": 0
+    },
+    "integrity_stats": {
+      "verified_entries": 1,
+      "failed_verifications": 0,
+      "tamper_attempts": 0
+    }
+  }
+}

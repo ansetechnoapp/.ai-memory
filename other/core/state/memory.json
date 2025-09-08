@@ -1,0 +1,84 @@
+{
+  "memory_config": {
+    "embedding_model": "text-embedding-ada-002",
+    "vector_dimension": 1536,
+    "similarity_threshold": 0.8,
+    "max_entries": 10000,
+    "cleanup_policy": "lru"
+  },
+  "memory_entries": [
+    {
+      "id": "test1",
+      "embedding": [0.1, 0.2, 0.3],
+      "metadata": {
+        "timestamp": 1720000000,
+        "agent": "Kevin",
+        "content": "Test memory entry",
+        "task_id": "T-001",
+        "context_type": "debug",
+        "importance_score": 0.7,
+        "tags": ["test", "initial"],
+        "related_agents": ["DebugMaster"],
+        "success_rate": 1.0
+      }
+    }
+  ],
+  "contextual_search": {
+    "enabled": true,
+    "search_algorithms": {
+      "semantic_similarity": {
+        "enabled": true,
+        "weight": 0.6
+      },
+      "keyword_matching": {
+        "enabled": true,
+        "weight": 0.3
+      },
+      "temporal_relevance": {
+        "enabled": true,
+        "weight": 0.1,
+        "decay_factor": 0.95
+      }
+    },
+    "context_filters": {
+      "agent_specific": true,
+      "task_type": true,
+      "time_window": true,
+      "success_threshold": 0.5
+    }
+  },
+  "embedding_operations": {
+    "batch_processing": {
+      "enabled": true,
+      "batch_size": 50,
+      "processing_interval": 5000
+    },
+    "similarity_cache": {
+      "enabled": true,
+      "cache_size": 1000,
+      "ttl": 3600
+    },
+    "auto_clustering": {
+      "enabled": true,
+      "min_cluster_size": 5,
+      "similarity_threshold": 0.85
+    }
+  },
+  "schema": {
+    "entry": {
+      "id": "string",
+      "embedding": "array[float]",
+      "metadata": {
+        "timestamp": "number",
+        "agent": "string",
+        "content": "string",
+        "task_id": "string",
+        "context_type": "enum[debug,task,research,coordination]",
+        "importance_score": "float[0-1]",
+        "tags": "array[string]",
+        "related_agents": "array[string]",
+        "success_rate": "float[0-1]"
+      }
+    }
+  }
+}

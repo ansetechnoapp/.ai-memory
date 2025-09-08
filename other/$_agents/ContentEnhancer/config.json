@@ -1,0 +1,232 @@
+{
+  "$schema": "../core/interfaces/IAgent.json",
+  "agent_info": {
+    "id": "content_enhancer_001",
+    "name": "ContentEnhancer",
+    "version": "2.0.0",
+    "type": "content_enhancement_agent",
+    "description": "Agent unifié pour l'amélioration, la reformulation et l'optimisation de contenu textuel. Fusion des capacités de Rephrasing et Rewording.",
+    "status": "active",
+    "last_activity": "2024-01-20T10:00:00Z"
+  },
+  "capabilities": [
+    {
+      "name": "content_rephrasing",
+      "description": "Reformulation de requêtes utilisateur pour améliorer la compréhension mutuelle",
+      "input_types": ["user_query", "text_content"],
+      "output_types": ["rephrased_content", "clarification_questions"]
+    },
+    {
+      "name": "content_enhancement",
+      "description": "Amélioration et optimisation de contenu textuel existant",
+      "input_types": ["raw_text", "markdown_content"],
+      "output_types": ["enhanced_content", "optimization_report"]
+    },
+    {
+      "name": "readability_optimization",
+      "description": "Optimisation de la lisibilité et de la structure du contenu",
+      "input_types": ["text_content"],
+      "output_types": ["optimized_content", "readability_metrics"]
+    },
+    {
+      "name": "content_analysis",
+      "description": "Analyse approfondie du contenu pour identifier les améliorations possibles",
+      "input_types": ["text_content"],
+      "output_types": ["analysis_report", "improvement_suggestions"]
+    },
+    {
+      "name": "context_research",
+      "description": "Recherche contextuelle pour enrichir la compréhension du contenu",
+      "input_types": ["query", "context_files"],
+      "output_types": ["research_results", "context_summary"]
+    }
+  ],
+  "specialties": [
+    "text_reformulation",
+    "content_optimization",
+    "readability_enhancement",
+    "linguistic_analysis",
+    "context_understanding",
+    "query_clarification",
+    "multilingual_support"
+  ],
+  "trigger_keywords": [
+    "rephrase",
+    "reformulate",
+    "enhance",
+    "improve",
+    "optimize",
+    "clarify",
+    "rewrite",
+    "polish",
+    "refine",
+    "restructure"
+  ],
+  "dependencies": {
+    "required_agents": [],
+    "optional_agents": [
+      "DeepSearch",
+      "AgentMeta"
+    ],
+    "external_services": [
+      "language_detection_api",
+      "readability_analyzer"
+    ],
+    "file_dependencies": [
+      "../core/interfaces/ITask.json",
+      "../core/interfaces/IResult.json"
+    ]
+  },
+  "output_requirements": {
+    "language": "auto_detect",
+    "format": "markdown",
+    "directory": "./outputs/content_enhanced",
+    "filename_pattern": "enhanced_content_{timestamp}_{auto_increment}.md",
+    "auto_increment": true,
+    "include_metadata": true,
+    "include_analysis": true
+  },
+  "performance_metrics": {
+    "target_response_time_ms": 3000,
+    "target_success_rate": 0.95,
+    "target_quality_score": 0.85,
+    "max_memory_usage_mb": 256,
+    "cache_hit_ratio_target": 0.7
+  },
+  "communication": {
+    "subscribed_events": [
+      "content.enhancement.request",
+      "content.rephrasing.request",
+      "task.content.assigned",
+      "system.config.updated"
+    ],
+    "published_events": [
+      "content.enhanced.completed",
+      "content.rephrased.completed",
+      "content.analysis.completed",
+      "enhancement.quality.report"
+    ],
+    "max_concurrent_tasks": 5,
+    "task_timeout_seconds": 300
+  },
+  "constraints": {
+    "max_file_size_mb": 10,
+    "timeout_seconds": 300,
+    "memory_limit_mb": 512,
+    "allowed_operations": [
+      "read_file",
+      "write_file",
+      "analyze_content",
+      "web_search",
+      "language_detection"
+    ],
+    "forbidden_operations": [
+      "system_modification",
+      "network_access_unrestricted"
+    ]
+  },
+  "configuration": {
+    "enhancement_modes": {
+      "quick_enhancement": {
+        "description": "Amélioration rapide avec corrections de base",
+        "processing_time_target_ms": 1000,
+        "quality_level": "standard",
+        "features": [
+          "grammar_correction",
+          "basic_restructuring",
+          "readability_improvement"
+        ]
+      },
+      "deep_enhancement": {
+        "description": "Amélioration approfondie avec analyse complète",
+        "processing_time_target_ms": 5000,
+        "quality_level": "premium",
+        "features": [
+          "comprehensive_analysis",
+          "advanced_restructuring",
+          "style_optimization",
+          "context_enrichment",
+          "multilingual_support"
+        ]
+      },
+      "rephrasing_mode": {
+        "description": "Mode spécialisé pour la reformulation de requêtes",
+        "processing_time_target_ms": 2000,
+        "quality_level": "high",
+        "features": [
+          "query_understanding",
+          "clarification_generation",
+          "context_preservation",
+          "ambiguity_resolution"
+        ]
+      }
+    },
+    "language_settings": {
+      "auto_detection": true,
+      "supported_languages": [
+        "fr",
+        "en",
+        "es",
+        "de",
+        "it"
+      ],
+      "fallback_language": "en",
+      "preserve_original_language": true
+    },
+    "quality_thresholds": {
+      "readability_score_min": 0.7,
+      "grammar_accuracy_min": 0.95,
+      "content_coherence_min": 0.8,
+      "enhancement_improvement_min": 0.15
+    },
+    "output_formatting": {
+      "include_original": true,
+      "include_changes_summary": true,
+      "include_metrics": true,
+      "markdown_features": [
+        "headers",
+        "lists",
+        "emphasis",
+        "code_blocks",
+        "tables"
+      ]
+    },
+    "caching_strategy": {
+      "cache_enhanced_content": true,
+      "cache_analysis_results": true,
+      "cache_ttl_minutes": 60,
+      "cache_size_limit_mb": 100
+    }
+  },
+  "integration_points": {
+    "with_agent_meta": {
+      "coordination_mode": "collaborative",
+      "task_delegation": true,
+      "result_aggregation": true
+    },
+    "with_deep_search": {
+      "context_enrichment": true,
+      "research_integration": true,
+      "fact_verification": false
+    },
+    "with_architect": {
+      "planning_consultation": false,
+      "structure_optimization": true
+    }
+  },
+  "security": {
+    "content_sanitization": true,
+    "pii_detection": true,
+    "safe_content_only": true,
+    "audit_trail": true
+  },
+  "migration_info": {
+    "replaces_agents": [
+      "Rephrasing",
+      "Rewording"
+    ],
+    "migration_date": "2024-01-20",
+    "backward_compatibility": true,
+    "migration_notes": "Fusion des agents Rephrasing et Rewording en un seul agent plus efficace avec interfaces standardisées"
+  }
+}

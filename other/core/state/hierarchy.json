@@ -1,0 +1,157 @@
+{
+  "hierarchy_config": {
+    "version": "1.0",
+    "last_updated": "2024-01-20T10:00:00Z",
+    "validation_enabled": true
+  },
+  "meta_orchestrator": {
+    "name": "Kevin",
+    "role": "Meta-Orchestrator",
+    "authority_level": 10,
+    "responsibilities": [
+      "Strategic decision making",
+      "Agent delegation and coordination",
+      "System-wide optimization",
+      "Conflict resolution",
+      "Performance monitoring"
+    ],
+    "capabilities": {
+      "can_override_decisions": true,
+      "can_create_agents": true,
+      "can_modify_hierarchy": true,
+      "can_access_all_data": true,
+      "can_terminate_processes": true
+    }
+  },
+  "agent_hierarchy": {
+    "level_1_coordinators": {
+      "Architect": {
+        "authority_level": 8,
+        "domain": "System Architecture",
+        "reports_to": "Kevin",
+        "manages": ["DeepSearch", "Resolver"],
+        "delegation_rights": ["technical_decisions", "resource_allocation"]
+      },
+      "DebugMaster": {
+        "authority_level": 8,
+        "domain": "Error Resolution",
+        "reports_to": "Kevin",
+        "manages": ["Resolver"],
+        "delegation_rights": ["debugging_decisions", "error_escalation"]
+      }
+    },
+    "level_2_specialists": {
+      "DeepSearch": {
+        "authority_level": 6,
+        "domain": "Information Retrieval",
+        "reports_to": "Architect",
+        "manages": [],
+        "delegation_rights": ["search_strategies"]
+      },
+      "Resolver": {
+        "authority_level": 6,
+        "domain": "Problem Resolution",
+        "reports_to": ["Architect", "DebugMaster"],
+        "manages": [],
+        "delegation_rights": ["solution_implementation"]
+      },
+      "ContentEnhancer": {
+        "authority_level": 5,
+        "domain": "Content Processing",
+        "reports_to": "Kevin",
+        "manages": ["Rephrasing", "Rewording"],
+        "delegation_rights": ["content_optimization"]
+      }
+    },
+    "level_3_workers": {
+      "Rephrasing": {
+        "authority_level": 4,
+        "domain": "Text Rephrasing",
+        "reports_to": "ContentEnhancer",
+        "manages": [],
+        "delegation_rights": ["text_modification"]
+      },
+      "Rewording": {
+        "authority_level": 4,
+        "domain": "Text Rewording",
+        "reports_to": "ContentEnhancer",
+        "manages": [],
+        "delegation_rights": ["vocabulary_enhancement"]
+      }
+    }
+  },
+  "dependency_graph": {
+    "Kevin": {
+      "depends_on": [],
+      "provides_to": ["Architect", "DebugMaster", "ContentEnhancer"]
+    },
+    "Architect": {
+      "depends_on": ["Kevin"],
+      "provides_to": ["DeepSearch", "Resolver"]
+    },
+    "DebugMaster": {
+      "depends_on": ["Kevin"],
+      "provides_to": ["Resolver"]
+    },
+    "ContentEnhancer": {
+      "depends_on": ["Kevin"],
+      "provides_to": ["Rephrasing", "Rewording"]
+    },
+    "DeepSearch": {
+      "depends_on": ["Architect"],
+      "provides_to": []
+    },
+    "Resolver": {
+      "depends_on": ["Architect", "DebugMaster"],
+      "provides_to": []
+    },
+    "Rephrasing": {
+      "depends_on": ["ContentEnhancer"],
+      "provides_to": []
+    },
+    "Rewording": {
+      "depends_on": ["ContentEnhancer"],
+      "provides_to": []
+    }
+  },
+  "authorization_matrix": {
+    "delegation_approval": {
+      "Kevin": ["all"],
+      "Architect": ["technical_tasks", "system_design"],
+      "DebugMaster": ["error_resolution", "debugging_tasks"],
+      "ContentEnhancer": ["content_tasks", "text_processing"]
+    },
+    "resource_access": {
+      "level_10": ["all_resources"],
+      "level_8": ["domain_resources", "managed_agent_resources"],
+      "level_6": ["specialist_resources"],
+      "level_4": ["worker_resources"]
+    }
+  },
+  "escalation_paths": {
+    "conflict_resolution": {
+      "level_1": "immediate_supervisor",
+      "level_2": "domain_coordinator",
+      "level_3": "Kevin"
+    },
+    "performance_issues": {
+      "threshold_breach": "immediate_supervisor",
+      "repeated_failures": "Kevin",
+      "system_critical": "Kevin"
+    }
+  },
+  "visual_diagram": {
+    "ascii_representation": [
+      "                    Kevin (Meta-Orchestrator)",
+      "                         |                    ",
+      "        +----------------+----------------+    ",
+      "        |                |                |    ",
+      "    Architect      DebugMaster    ContentEnhancer",
+      "        |                |                |    ",
+      "   +----+----+          |           +----+----+",
+      "   |         |          |           |         |",
+      "DeepSearch Resolver  Resolver   Rephrasing Rewording"
+    ],
+    "mermaid_diagram": "graph TD\n    K[Kevin - Meta-Orchestrator] --> A[Architect]\n    K --> D[DebugMaster]\n    K --> C[ContentEnhancer]\n    A --> DS[DeepSearch]\n    A --> R[Resolver]\n    D --> R\n    C --> RP[Rephrasing]\n    C --> RW[Rewording]"
+  }
+}

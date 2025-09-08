@@ -1,0 +1,252 @@
+{
+  "routing_config": {
+    "version": "1.0",
+    "priority_system": "interface_first",
+    "fallback_enabled": true,
+    "logging_level": "detailed"
+  },
+  "interface_priority": {
+    "primary_routing": {
+      "method": "IAgent.json",
+      "priority": 1,
+      "confidence_threshold": 0.8,
+      "validation_required": true
+    },
+    "fallback_routing": {
+      "method": "keyword_matching",
+      "priority": 2,
+      "confidence_threshold": 0.6,
+      "legacy_support": true
+    },
+    "emergency_routing": {
+      "method": "manual_assignment",
+      "priority": 3,
+      "kevin_intervention": true
+    }
+  },
+  "agent_interfaces": {
+    "Architect": {
+      "interface_file": "$_agents/Architect/IAgent.json",
+      "capabilities": [
+        "system_design",
+        "architecture_planning",
+        "technical_coordination"
+      ],
+      "input_patterns": [
+        "design",
+        "architecture",
+        "system",
+        "structure"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    },
+    "DebugMaster": {
+      "interface_file": "$_agents/DebugMaster/IAgent.json",
+      "capabilities": [
+        "error_diagnosis",
+        "debugging",
+        "problem_resolution"
+      ],
+      "input_patterns": [
+        "debug",
+        "error",
+        "fix",
+        "problem"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    },
+    "DeepSearch": {
+      "interface_file": "$_agents/DeepSearch/IAgent.json",
+      "capabilities": [
+        "information_retrieval",
+        "research",
+        "data_analysis"
+      ],
+      "input_patterns": [
+        "search",
+        "find",
+        "research",
+        "analyze"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    },
+    "Resolver": {
+      "interface_file": "$_agents/Resolver/IAgent.json",
+      "capabilities": [
+        "problem_solving",
+        "solution_implementation",
+        "conflict_resolution"
+      ],
+      "input_patterns": [
+        "solve",
+        "resolve",
+        "implement",
+        "solution"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    },
+    "Rephrasing": {
+      "interface_file": "$_agents/Rephrasing/IAgent.json",
+      "capabilities": [
+        "text_rephrasing",
+        "content_optimization",
+        "language_enhancement"
+      ],
+      "input_patterns": [
+        "rephrase",
+        "rewrite",
+        "improve",
+        "optimize"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    },
+    "Rewording": {
+      "interface_file": "$_agents/Rewording/IAgent.json",
+      "capabilities": [
+        "text_rewording",
+        "vocabulary_enhancement",
+        "style_adjustment"
+      ],
+      "input_patterns": [
+        "reword",
+        "enhance",
+        "vocabulary",
+        "style"
+      ],
+      "confidence_weights": {
+        "interface_match": 0.7,
+        "capability_match": 0.2,
+        "pattern_match": 0.1
+      }
+    }
+  },
+  "fallback_logic": {
+    "interface_failure_handling": {
+      "missing_interface_file": {
+        "action": "fallback_to_keywords",
+        "log_level": "warning",
+        "notify_kevin": true
+      },
+      "invalid_interface_format": {
+        "action": "fallback_to_keywords",
+        "log_level": "error",
+        "notify_kevin": true
+      },
+      "interface_timeout": {
+        "action": "fallback_to_keywords",
+        "log_level": "warning",
+        "timeout_threshold": 5000
+      }
+    },
+    "keyword_matching_rules": {
+      "exact_match": {
+        "weight": 1.0,
+        "case_sensitive": false
+      },
+      "partial_match": {
+        "weight": 0.7,
+        "min_length": 3
+      },
+      "fuzzy_match": {
+        "weight": 0.5,
+        "similarity_threshold": 0.8
+      }
+    },
+    "mismatch_detection": {
+      "confidence_threshold": 0.5,
+      "multiple_matches_handling": "highest_confidence",
+      "no_matches_handling": "escalate_to_kevin"
+    }
+  },
+  "logging_system": {
+    "routing_decisions": {
+      "log_all_decisions": true,
+      "include_confidence_scores": true,
+      "track_fallback_usage": true,
+      "performance_metrics": true
+    },
+    "mismatch_tracking": {
+      "interface_vs_keyword_conflicts": true,
+      "confidence_score_analysis": true,
+      "pattern_learning": true,
+      "improvement_suggestions": true
+    },
+    "log_entries": [
+      {
+        "timestamp": 1720000000,
+        "request_id": "req_001",
+        "routing_method": "interface_primary",
+        "selected_agent": "Architect",
+        "confidence_score": 0.85,
+        "fallback_used": false,
+        "decision_factors": {
+          "interface_match": 0.9,
+          "capability_match": 0.8,
+          "pattern_match": 0.7
+        }
+      }
+    ]
+  },
+  "performance_optimization": {
+    "caching": {
+      "interface_cache": {
+        "enabled": true,
+        "ttl": 3600,
+        "max_entries": 100
+      },
+      "routing_cache": {
+        "enabled": true,
+        "ttl": 1800,
+        "max_entries": 500
+      }
+    },
+    "learning_system": {
+      "pattern_recognition": true,
+      "success_rate_tracking": true,
+      "adaptive_confidence_thresholds": true,
+      "feedback_integration": true
+    }
+  },
+  "monitoring_alerts": {
+    "high_fallback_rate": {
+      "threshold": 0.3,
+      "action": "notify_kevin",
+      "investigation_required": true
+    },
+    "interface_file_issues": {
+      "missing_files": "immediate_alert",
+      "format_errors": "immediate_alert",
+      "outdated_interfaces": "daily_report"
+    },
+    "routing_performance": {
+      "slow_decisions": {
+        "threshold": 1000,
+        "action": "performance_review"
+      },
+      "low_confidence_decisions": {
+        "threshold": 0.6,
+        "action": "pattern_analysis"
+      }
+    }
+  }
+}

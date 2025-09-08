@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IAgent Interface",
+  "description": "Interface standardisée pour tous les agents du système multi-agents",
+  "type": "object",
+  "properties": {
+    "agent_info": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifiant unique de l'agent",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nom de l'agent",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "description": "Version de l'agent (semver)",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["orchestration", "planning", "debugging", "research", "content", "resolution"],
+          "description": "Type fonctionnel de l'agent"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description des capacités de l'agent"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["idle", "busy", "error", "maintenance", "disabled"],
+          "default": "idle",
+          "description": "État actuel de l'agent"
+        },
+        "last_activity": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp de la dernière activité"
+        }
+      },
+      "required": ["id", "name", "version", "type", "description"]
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Liste des capacités de l'agent",
+      "minItems": 1
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Domaines de spécialisation"
+    },
+    "trigger_keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Mots-clés déclencheurs pour l'activation automatique"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Agents dont dépend cet agent"
+    },
+    "output_requirements": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "default": "English"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["Markdown", "JSON", "Plain Text", "HTML"]
+        },
+        "directory": {
+          "type": "string",
+          "description": "Répertoire de sortie relatif"
+        },
+        "filename_pattern": {
+          "type": "string",
+          "description": "Pattern de nommage des fichiers"
+        },
+        "auto_increment": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["format", "directory"]
+    },
+    "performance_metrics": {
+      "type": "object",
+      "properties": {
+        "avg_response_time": {
+          "type": "number",
+          "description": "Temps de réponse moyen en millisecondes"
+        },
+        "success_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Taux de succès (0-1)"
+        },
+        "total_tasks_completed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "communication": {
+      "type": "object",
+      "properties": {
+        "subscribed_events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Événements auxquels l'agent est abonné"
+        },
+        "published_events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Événements que l'agent peut publier"
+        },
+        "max_concurrent_tasks": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Nombre maximum de tâches simultanées"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "max_file_size": {
+          "type": "integer",
+          "description": "Taille maximale des fichiers en lignes"
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Timeout en secondes"
+        },
+        "memory_limit": {
+          "type": "string",
+          "description": "Limite mémoire (ex: '512MB')"
+        },
+        "allowed_operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["read", "write", "execute", "network", "file_system"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["agent_info", "capabilities", "output_requirements"]
+}
