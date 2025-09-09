@@ -1,16 +1,19 @@
-# 🧠 Code Quality Standards – Next.js + Supabase Project
+# 🧠 Code Quality Standards
 > **Goal:** Maintain a clean, stable, and scalable codebase.
+
+---
+# concerns only the scrappyodds project
+
+The SQL reference source, also known as the SQL truth source, is a list of one or more SQL files based on the project database containing only SQL code that serves as a reference and support during the implementation of a project. Why do we need a reference source? Because it contains SQL queries that have been manually generated and tested, and approved by a human.
+
+# write all liste
+
 ---
 ## ✅ 1. Syntax Error Prevention
-- **Review code before every commit** (`pre-commit`)
-- Use **linters** (`eslint`) and **formatters** (`prettier`)
-- **Test incrementally**, step-by-step
-- Double-check **JavaScript/TypeScript syntax** and variable naming
+
 ---
 ## 🧪 2. Testing Setup First
-- Set up and configure a **testing library** before development begins
-  - Recommended: `vitest`, `jest`, or `@testing-library/react`
-- Include unit tests, component tests, and integration tests in the base setup
+
 ---
 ## 🚀 3. Feature Development Workflow
 ### Follow these steps:
