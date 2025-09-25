@@ -63,8 +63,8 @@ d) Only move to the next feature after **all tests pass**
   - Add setup instructions
   - Define expected test results
 ---
-## 📚 10. Don't forget to read ‘.ai-memory\$_rules\MCP.md’: you'll find a list of the essential MCP tools you'll need to develop quickly on this project.
-- Don't forget to consult the ‘.ai-memory\$_rules\MCP.md’ file: it lists all the practical MCP tools frequently used to code quickly on this project.
+## 📚 10. Don't forget to read ‘.ai-memory\$_MCP.md’: you'll find a list of the essential MCP tools you'll need to develop quickly on this project.
+- Don't forget to consult the ‘.ai-memory\$_MCP.md’ file: it lists all the practical MCP tools frequently used to code quickly on this project.
 ---
 ## 📦 11. Package Manager
 

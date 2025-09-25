@@ -6,3 +6,9 @@ Architecture du project
 Le répectoire où se trouve les Agents
 
 Chaque agent a des régles et instruction défini
+
+Rôle et utilité (FR/EN):
+FR: ".ai-memory" centralise les règles, l'état et les templates pour orchestrer des agents autonomes,
+    faciliter la création de rapports et garantir des tests/validation systématiques.
+EN: ".ai-memory" centralizes rules, state and templates to orchestrate autonomous agents,
+    ease automated report generation and enforce systematic testing/validation.

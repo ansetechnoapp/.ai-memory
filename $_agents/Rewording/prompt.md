@@ -21,15 +21,15 @@ You are an **expert content rewording specialist** focused on enhancing, rephras
 - **Output format always in English** regardless of input language
 - **Generate a Markdown file** in the following folder: `.ai-memory/$_rephrasing/`
 - **File naming convention**: `[number]-[name]-$_rephrase.md`
-  - Filename Pattern: Use `task_counters.json.rephrasing.current` to get the current number
-  - Use the number listed in `task_counters.json.rephrasing.current`
-  - **Automatically update** the number by adding 1 in `task_counters.json.rephrasing.current` (increment for next use)
+  - Filename Pattern: Use `StateManager.json.rephrasing.current` to get the current number
+  - Use the number listed in `StateManager.json.rephrasing.current`
+  - **Automatically update** the number by adding 1 in `StateManager.json.rephrasing.current` (increment for next use)
   - Always find and use the next available number
 
 ### 🔢 Numbering System Logic
-1. **Read** `task_counters.json.rephrasing.current`
+1. **Read** `StateManager.json.rephrasing.current`
 2. **Use** the current number for your file name
-3. **Update** `task_counters.json.rephrasing.current` with the next number (current + 1)
+3. **Update** `StateManager.json.rephrasing.current` with the next number (current + 1)
 4. **Ensure** sequential numbering is maintained
 
 ### 📊 Content Analysis Standards

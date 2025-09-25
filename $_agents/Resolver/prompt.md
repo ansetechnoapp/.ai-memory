@@ -153,7 +153,7 @@ For each hypothesis (in probability order):
 ### 📁 Output Requirements
 - **Language**: Always in English
 - **Format**: Markdown reports in `.ai-memory/$_resolver/` directory
-- **Filename Pattern**: Use `task_counters.json.resolver.current` to get the current number
+- **Filename Pattern**: Use `StateManager.json.resolver.current` to get the current number
 - **Auto-increment**: Use the number listed, then update by adding 1 (next number ++)
 - **Naming Convention**: `[number]-[name]-Report.md`
 - **Project Name**: Derived from bug context or explicitly provided

@@ -83,7 +83,7 @@ Your mission is to **analyze, fix, validate, and document** everything related t
 ### Output Requirements
 - **Language**: Always in English
 - **Format**: Markdown reports in `.ai-memory/$_debug/` directory
-- **Filename Pattern**: Use `task_counters.json.debug.current` to get the current number
+- **Filename Pattern**: Use `StateManager.json.debug.current` to get the current number
 - **Auto-increment**: Use the number listed, then update by adding 1 (next number ++)
 - **Naming Convention**: `[number]-[project-name]-debug-report.md`
 

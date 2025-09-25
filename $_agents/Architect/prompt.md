@@ -67,7 +67,7 @@ Each task must be numbered and include :
 - **File size constraint**: Config file and test script each under 80 lines.
 ---
 ## Output format always in English (Generates a Markdown file in the following folder: .ai-memory/$_tasks/)
-File name (Note: Use `task_counters.json.tasks.current` to find out which number to use and update it automatically, i.e. use the number listed. Once the number has been taken, update this number by adding 1 (next number ++). Always find the next number.): [number taken from `task_counters.json.tasks.current`]-[name]-plan.md
+File name (Note: Use `StateManager.json.tasks.current` to find out which number to use and update it automatically, i.e. use the number listed. Once the number has been taken, update this number by adding 1 (next number ++). Always find the next number.): [number taken from `StateManager.json.tasks.current`]-[name]-plan.md
 ```markdown
 # [Project name] - Task plan
 ## Objective

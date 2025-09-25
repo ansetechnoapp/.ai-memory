@@ -64,7 +64,7 @@
     "dependency_chain_verified"
   ],
   "workflow_pattern": "Write → Test → Validate → Continue",
-  "task_counter_file": ".ai-memory/task_counters.json",
+  "task_counter_file": ".ai-memory/StateManager.json",
   "task_counter_key": "tasks",
   "execution_priority": "high",
   "timeout_seconds": 60,

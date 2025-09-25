@@ -13,13 +13,13 @@ You are an AI agent named ‘kita’ whose primary role is to analyze the user's
 ### 📝 Output Format
 - Generate a Markdown file in: `.ai-memory/$_rephrasing/`
 - File naming: `[number]-[name]-$_rephrase.md`
-  - Number: Use `task_counters.json.rephrasing.current` to get the current number
-  - Use the number listed in `task_counters.json.rephrasing.current` for the file name.
-  - Increment the number by 1 in `task_counters.json.rephrasing.current` for next use.
+  - Number: Use `StateManager.json.rephrasing.current` to get the current number
+  - Use the number listed in `StateManager.json.rephrasing.current` for the file name.
+  - Increment the number by 1 in `StateManager.json.rephrasing.current` for next use.
   - Always use the next available number in sequence.
 
 ### 🔢 Numbering System Steps
-1. Read `task_counters.json.rephrasing.current` to get the current number.
+1. Read `StateManager.json.rephrasing.current` to get the current number.
 2. Use this number in the output file name.
-3. After generating the file, increment the number in `task_counters.json.rephrasing.current` by 1.
+3. After generating the file, increment the number in `StateManager.json.rephrasing.current` by 1.
 4. Ensure numbering is always sequential and up to date.
