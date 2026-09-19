@@ -66,6 +66,20 @@ Each task must be numbered and include :
 - **Success criteria**: HTTP status `200 OK` and JSON response `{ "status": "healthy" }`.
 - **File size constraint**: Config file and test script each under 80 lines.
 ---
+## Suggested architecture themes (short guidance)
+- When you design a plan, evaluate these themes and pick the minimal set needed:
+  - Agent-Oriented Orchestration + Message Broker: for modular agent responsibilities and reliable inter-agent comms.
+  - StateManager-centric coordination: central task counters, validation and audit trail.
+  - Hexagonal/Ports-and-Adapters: maintain testable domain core.
+  - Observability & CI/CD: ensure every plan includes metrics, logs, traces and test-gated pipelines.
+- Selection rules:
+  1. For prototypes: prefer Agent-Oriented + Message Broker + Observability.  
+  2. For production with audit needs: add CQRS+EventSourcing and strict StateManager validations.  
+  3. For scalability: add Serverless components and autoscaling for burst tasks.
+- Tests and constraints:
+  - Every architectural decision must include at least one automated test step (health, integration or contract test).
+  - Keep generated artifacts under 80 lines per file when possible.
+---
 ## Output format always in English (Generates a Markdown file in the following folder: .ai-memory/$_tasks/)
 File name (Note: Use `StateManager.json.tasks.current` to find out which number to use and update it automatically, i.e. use the number listed. Once the number has been taken, update this number by adding 1 (next number ++). Always find the next number.): [number taken from `StateManager.json.tasks.current`]-[name]-plan.md
 ```markdown
@@ -110,7 +124,6 @@ File name (Note: Use `StateManager.json.tasks.current` to find out which number 
 - **Success criteria**: Selection of an approved solution with documented rationale.
 - **File size constraint**: Evaluation scripts under 80 lines each.
 ...
-```
 ## ⚠️ Strict constraints
 ✅ You describe everything precisely so that execution is unambiguous.
 ✅ **You ALWAYS emphasize test script creation importance**.

@@ -1,16 +1,47 @@
-c'est une projet qu'on aura a intégrer a d'autre projet a l'avenir, elle permettra de garder les bonnes pratique spécifique a un projet en fonction de son intégration, projet qui explique et permet a l'agent AgentMeta (kevin) de fonctionné en collaboration avec d'autre agent.
-AgentMeta (kevin) a une bonne mémoire
+# AI Memory Project Structure
 
-## Rôle et utilité / Role and utility
+## Overview
+This project serves as a foundation for an autonomous agent ecosystem, with AgentMeta (kevin) as the central orchestrator.
 
-- FR : Ce dépôt ".ai-memory" sert de socle pour un écosystème d'agents autonomes (AgentMeta, Rewording, Resolver, DebugMaster, Architect, DeepSearch, etc.). Il centralise :
-  - les règles et bonnes pratiques du projet (.ai-memory/$_rules),
-  - la gestion des compteurs et de l'état global (.ai-memory/StateManager.json),
-  - les templates et protocoles pour créer des rapports automatisés (rephrasing, research, debug, resolver).
-  - L'objectif est de standardiser l'orchestration des agents, d'assurer la traçabilité des actions, et de faciliter l'intégration de ce codebase dans d'autres projets.
+## Core Components
+### 1. Agent System
+- **AgentMeta (kevin)**: Central orchestrator
+- **Specialist Agents**:
+  - Architect: Project planning and architecture
+  - Rephrasing (kita): Request analysis and optimization
+  - DebugMaster: Testing and validation
+  - Resolver: Task execution
+  - DeepSearch: Research and analysis
 
-- EN : This ".ai-memory" repository is the foundation for an ecosystem of autonomous agents (AgentMeta, Rewording, Resolver, DebugMaster, Architect, DeepSearch, etc.). It centralizes:
-  - project rules & best practices (.ai-memory/$_rules),
-  - global state and task counters (.ai-memory/StateManager.json),
-  - templates and protocols for automated report creation (rephrasing, research, debug, resolver).
-  - Its purpose is to standardize agent orchestration, guarantee action traceability, and simplify integrating this codebase into other projects.
+### 2. Core Architecture
+- **State Management**: `.ai-memory/StateManager.json`
+  - Task counters
+  - Validation system
+  - Audit trails
+
+- **Rules & Standards**: `.ai-memory/$_rules/`
+  - Project rules (rule.md)
+  - Documentation standards (rule2.md)
+  - Code quality guidelines
+
+### 3. Agent Directories
+`.ai-memory/$_agents/`
+- **Architect/**: Planning and architecture design
+- **Rephrasing/**: Query optimization and analysis
+- **DebugMaster/**: Testing and validation
+- **Resolver/**: Task execution
+- **DeepSearch/**: Research capabilities
+
+## Key Features
+- Message broker-based communication
+- Event-driven architecture
+- Centralized state management
+- Automated testing and validation
+- Documentation-first approach
+- 80-line file size limit
+- Incremental development process
+
+## Integration Points
+- Designed for easy integration with other projects
+- Standardized interfaces and protocols
+- Centralized memory and state management
